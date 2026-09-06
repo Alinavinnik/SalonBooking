@@ -1,0 +1,8 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+a.active {
+  color: rgb(222, 149, 212);
+}
