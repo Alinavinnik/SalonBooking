@@ -1,0 +1,88 @@
+.hero {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  min-height: 700px;
+  overflow: hidden;
+}
+
+.collage {
+  width: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  gap: 10px;
+}
+
+.photo {
+  flex: 1;
+  height: 550px;
+
+  background-size: cover;
+  background-position: center;
+
+  border-radius: 6px;
+
+  opacity: 0;
+  will-change: transform, opacity;
+}
+
+/* LEFT */
+.photo_1 {
+  background-image: url("/color_nails.png");
+
+  animation: fromTop 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* CENTER */
+
+.photo_2 {
+  background-image: url("/color_kare.png");
+
+  animation: fadeIn 1s 0.2s ease forwards;
+}
+
+/* RIGHT */
+
+.photo_3 {
+  background-image: url("/color_brows.png");
+
+  animation: fromBottom 1s 0.1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes fromTop {
+  from {
+    opacity: 0;
+    transform: translateY(-120px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fromBottom {
+  from {
+    opacity: 0;
+    transform: translateY(120px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
