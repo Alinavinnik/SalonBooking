@@ -4,7 +4,7 @@ import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router";
 import HomePage from "./pages/HomePage";
 import RootLayout from "./pages/RootLayout";
-import BookingPage from "./pages/BookingPage";
+import BookingPage from "./pages/BookingPage/BookingPage";
 import ServicesPage from "./pages/ServicesPage";
 import MastersPage from "./pages/MastersPage";
 

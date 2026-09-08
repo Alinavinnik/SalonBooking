@@ -4,9 +4,9 @@ import css from "./Header.module.css";
 const Header = () => {
   return (
     <header className={css.header}>
-      <div className="container">
+      <div className={`container ${css.content}`}>
         <Link to="/">Logo</Link>
-        <nav>
+        <nav className={css.nav}>
           <NavLink to="/">Головна</NavLink>
           <NavLink to="/services">Послуги</NavLink>
           <NavLink to="/masters">Прайс</NavLink>

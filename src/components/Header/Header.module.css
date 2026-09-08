@@ -1,8 +1,11 @@
 .header {
+}
+.content {
   display: flex;
   justify-content: space-between;
 }
 
-a.active {
-  color: rgb(222, 149, 212);
+.nav {
+  display: flex;
+  gap: 20px;
 }
