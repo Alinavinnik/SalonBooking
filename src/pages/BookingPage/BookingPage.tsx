@@ -30,7 +30,11 @@ const BookingPage = () => {
             </button>
           )}
           {currentStep < lastStep && (
-            <button type="button" onClick={handleNext}>
+            <button
+              type="button"
+              onClick={handleNext}
+              disabled={!selectedServiceId}
+            >
               Далі
             </button>
           )}

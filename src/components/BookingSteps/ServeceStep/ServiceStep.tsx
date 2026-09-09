@@ -3,7 +3,7 @@ import { categories, services, type CategoryId } from "../data";
 import css from "./ServiceStep.module.css";
 interface ServiceStepProps {
   selectedServiceId: string | null;
-  onSelectService: (serviceId: string) => void;
+  onSelectService: (serviceId: string | null) => void;
 }
 
 const ServiceStep = ({
@@ -18,6 +18,14 @@ const ServiceStep = ({
   const filtredCategories = services.filter(
     (category) => category.category === selectedCategory,
   );
+
+  const handleSelect = (serviceId: string) => {
+    if (serviceId === selectedServiceId) {
+      onSelectService(null);
+      return;
+    }
+    onSelectService(serviceId);
+  };
   return (
     <div>
       <h2>Оберіть послугу</h2>
@@ -38,7 +46,7 @@ const ServiceStep = ({
           <button
             key={service.id}
             type="button"
-            onClick={() => onSelectService(service.id)}
+            onClick={() => handleSelect(service.id)}
             className={css.serviceButton}
             aria-pressed={selectedServiceId === service.id}
           >
