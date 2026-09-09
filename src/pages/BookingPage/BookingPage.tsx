@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ServiceStep from "../../components/BookingSteps/ServeceStep/ServiceStep";
 import css from "./BookingPage.module.css";
+import StepMaster from "../../components/BookingSteps/StepMaster/StepMaster";
 
 const BookingPage = () => {
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
@@ -19,10 +20,13 @@ const BookingPage = () => {
     <section className={css.booking}>
       <div className="container">
         <h1></h1>
-        <ServiceStep
-          selectedServiceId={selectedServiceId}
-          onSelectService={setSelectedServiceId}
-        />
+        {currentStep === 0 && (
+          <ServiceStep
+            selectedServiceId={selectedServiceId}
+            onSelectService={setSelectedServiceId}
+          />
+        )}
+        {currentStep === 1 && <StepMaster />}
         <div>
           {currentStep > 0 && (
             <button type="button" onClick={handleBack}>

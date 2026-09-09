@@ -13,7 +13,9 @@ const Header = () => {
           <NavLink to="/about">Про нас</NavLink>
           <NavLink to="/contacts">Контакти</NavLink>
         </nav>
-        <Link to="/booking">Записатись</Link>
+        <Link className={css.btn} to="/booking">
+          Записатись
+        </Link>
       </div>
     </header>
   );
