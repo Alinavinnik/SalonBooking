@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { categories, services, type CategoryId } from "../data";
 import css from "./ServiceStep.module.css";
+import ButtonItem from "../SelectableCard/SelectableCard";
 interface ServiceStepProps {
   selectedServiceId: string | null;
   onSelectService: (serviceId: string | null) => void;
@@ -26,6 +27,7 @@ const ServiceStep = ({
     }
     onSelectService(serviceId);
   };
+
   return (
     <div>
       <h2>Оберіть послугу</h2>
@@ -43,19 +45,17 @@ const ServiceStep = ({
       </div>
       <div>
         {filtredCategories.map((service) => (
-          <button
+          <ButtonItem
             key={service.id}
-            type="button"
-            onClick={() => handleSelect(service.id)}
-            className={css.serviceButton}
-            aria-pressed={selectedServiceId === service.id}
+            onSeleced={() => handleSelect(service.id)}
+            isSelected={selectedServiceId === service.id}
           >
             <span>{service.name}</span>
             <span className={css.serviceInfo}>
               <span>{service.price} грн</span>
               <span>{service.duration} хв</span>
             </span>
-          </button>
+          </ButtonItem>
         ))}
       </div>
     </div>

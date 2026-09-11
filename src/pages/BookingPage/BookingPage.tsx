@@ -16,6 +16,13 @@ const BookingPage = () => {
   const handleBack = () => {
     setCurrentStep((prev) => prev - 1);
   };
+  const getIsNextDisabled = () => {
+    if (currentStep === 0) return !selectedServiceId;
+
+    return false;
+  };
+  const isNextDisabled = getIsNextDisabled();
+
   return (
     <section className={css.booking}>
       <div className="container">
@@ -37,7 +44,7 @@ const BookingPage = () => {
             <button
               type="button"
               onClick={handleNext}
-              disabled={!selectedServiceId}
+              disabled={!isNextDisabled}
             >
               Далі
             </button>
