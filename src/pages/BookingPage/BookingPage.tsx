@@ -7,6 +7,7 @@ const BookingPage = () => {
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
     null,
   );
+  const [selectedMasterId, setSelectedMasterId] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const lastStep = 5;
 
@@ -33,7 +34,13 @@ const BookingPage = () => {
             onSelectService={setSelectedServiceId}
           />
         )}
-        {currentStep === 1 && <StepMaster />}
+        {currentStep === 1 && (
+          <StepMaster
+            onSelect={setSelectedMasterId}
+            selectedMaster={selectedMasterId}
+            selectedServiceId={selectedServiceId}
+          />
+        )}
         <div>
           {currentStep > 0 && (
             <button type="button" onClick={handleBack}>
@@ -44,7 +51,7 @@ const BookingPage = () => {
             <button
               type="button"
               onClick={handleNext}
-              disabled={!isNextDisabled}
+              disabled={isNextDisabled}
             >
               Далі
             </button>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { categories, services, type CategoryId } from "../data";
 import css from "./ServiceStep.module.css";
 import ButtonItem from "../SelectableCard/SelectableCard";
+import { toggleSelection } from "../helpers/helpers";
+
 interface ServiceStepProps {
   selectedServiceId: string | null;
   onSelectService: (serviceId: string | null) => void;
@@ -21,11 +23,9 @@ const ServiceStep = ({
   );
 
   const handleSelect = (serviceId: string) => {
-    if (serviceId === selectedServiceId) {
-      onSelectService(null);
-      return;
-    }
-    onSelectService(serviceId);
+    onSelectService(
+      toggleSelection({ id: serviceId, selectedItem: selectedServiceId }),
+    );
   };
 
   return (
@@ -45,17 +45,18 @@ const ServiceStep = ({
       </div>
       <div>
         {filtredCategories.map((service) => (
-          <ButtonItem
-            key={service.id}
-            onSeleced={() => handleSelect(service.id)}
-            isSelected={selectedServiceId === service.id}
-          >
-            <span>{service.name}</span>
-            <span className={css.serviceInfo}>
-              <span>{service.price} грн</span>
-              <span>{service.duration} хв</span>
-            </span>
-          </ButtonItem>
+          <ul key={service.id}>
+            <ButtonItem
+              onSeleced={() => handleSelect(service.id)}
+              isSelected={selectedServiceId === service.id}
+            >
+              <span>{service.name}</span>
+              <span className={css.serviceInfo}>
+                <span>{service.price} грн</span>
+                <span>{service.duration} хв</span>
+              </span>
+            </ButtonItem>
+          </ul>
         ))}
       </div>
     </div>

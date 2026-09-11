@@ -13,14 +13,16 @@ const SelectableCard = ({
   onSeleced,
 }: SelectableCardProps) => {
   return (
-    <button
-      type="button"
-      onClick={onSeleced}
-      className={css.serviceButton}
-      aria-pressed={isSelected}
-    >
-      {children}
-    </button>
+    <li>
+      <button
+        type="button"
+        onClick={onSeleced}
+        className={css.serviceButton}
+        aria-pressed={isSelected}
+      >
+        {children}
+      </button>
+    </li>
   );
 };
 
