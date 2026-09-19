@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { getScheduleByMasterId } from "../../../../api/mastersServices";
 import { getDate, toggleSelection } from "../../helpers/helpers";
 import SelectableCard from "../../SelectableCard/SelectableCard";
 import css from "./StepDate.module.css";
@@ -14,7 +15,18 @@ const StepDate = ({
   selectedDate,
   selectedMasterId,
 }: StepDateProps) => {
-  const dates = getDate(6);
+  const dates = getDate(14);
+  const { data } = useQuery({
+    queryKey: ["schedule"],
+    queryFn: () => {
+      if (!selectedMasterId) {
+        return;
+      }
+      return getScheduleByMasterId(selectedMasterId);
+    },
+    enabled: !!selectedMasterId,
+  });
+
   const handleClick = (dateValue: string) => {
     onSelect(
       toggleSelection({
@@ -23,12 +35,15 @@ const StepDate = ({
       }),
     );
   };
+  const availableDays = dates.filter((date) =>
+    data?.[0].workingDays.includes(date.getDay()),
+  );
 
   return (
-    <div>
+    <div className={css.content}>
       <h1>Оберіть Дату</h1>
       <ul>
-        {dates.map((date, i) => {
+        {availableDays.slice(0, 6).map((date, i) => {
           const dateValue = date.toISOString().split("T")[0];
           return (
             <SelectableCard

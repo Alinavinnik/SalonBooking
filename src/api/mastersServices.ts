@@ -16,3 +16,23 @@ export const getMasters = async () => {
   const { data } = await apiClient.get<MastersResponse[]>("/masters");
   return data;
 };
+
+interface ScheduleByMasterIdResponse {
+  id: string;
+  masterId: string;
+  workingDays: number[];
+  startTime: string;
+  endTime: string;
+}
+
+export const getScheduleByMasterId = async (masterId: string) => {
+  const { data } = await apiClient.get<ScheduleByMasterIdResponse[]>(
+    "/schedules",
+    {
+      params: {
+        masterId,
+      },
+    },
+  );
+  return data;
+};
