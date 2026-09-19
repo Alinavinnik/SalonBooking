@@ -19,7 +19,6 @@ const StepMaster = ({
     queryKey: ["masters"],
     queryFn: getMasters,
   });
-  console.log(masters);
   const handleClick = (masterId: string) => {
     onSelect(toggleSelection({ id: masterId, selectedItem: selectedMaster }));
   };

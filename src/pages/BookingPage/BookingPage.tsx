@@ -3,6 +3,7 @@ import ServiceStep from "../../components/BookingSteps/Steps/ServeceStep/Service
 import css from "./BookingPage.module.css";
 import StepMaster from "../../components/BookingSteps/Steps/StepMaster/StepMaster";
 import StepDate from "../../components/BookingSteps/Steps/StepDate/StepDate";
+import StepTime from "../../components/BookingSteps/Steps/StepTime/StepTime";
 
 const BookingPage = () => {
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
@@ -10,6 +11,7 @@ const BookingPage = () => {
   );
   const [selectedMasterId, setSelectedMasterId] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
+  const [selectedTime, setSelectedTime] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const lastStep = 5;
 
@@ -21,7 +23,8 @@ const BookingPage = () => {
   };
   const getIsNextDisabled = () => {
     if (currentStep === 0) return !selectedServiceId;
-
+    if (currentStep === 1) return !selectedMasterId;
+    if (currentStep === 2) return !selectedDate;
     return false;
   };
   const isNextDisabled = getIsNextDisabled();
@@ -48,6 +51,13 @@ const BookingPage = () => {
             selectedDate={selectedDate}
             onSelect={setSelectedDate}
             selectedMasterId={selectedMasterId}
+          />
+        )}
+        {currentStep === 3 && (
+          <StepTime
+            selectedServiceId={selectedServiceId}
+            selectedMasterId={selectedMasterId}
+            selectedDate={selectedDate}
           />
         )}
         <div>
