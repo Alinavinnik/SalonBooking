@@ -8,6 +8,7 @@ interface StepMasterProps {
   selectedMaster: string | null;
   selectedServiceId: string | null;
 }
+const ANY_MASTER = "any";
 
 const StepMaster = ({
   onSelect,
@@ -19,32 +20,38 @@ const StepMaster = ({
     queryFn: getMasters,
   });
   console.log(masters);
-
   const handleClick = (masterId: string) => {
     onSelect(toggleSelection({ id: masterId, selectedItem: selectedMaster }));
   };
   return (
     <div>
       <h2>Оберіть майстра</h2>
-      {masters
-        ?.filter((master) =>
-          master.serviceIds.some(
-            (serviceId) => serviceId === selectedServiceId,
-          ),
-        )
-        .map((master) => {
-          return (
-            <ul key={master.id}>
+      <ul>
+        <SelectableCard
+          onSeleced={() => handleClick(ANY_MASTER)}
+          isSelected={ANY_MASTER === selectedMaster}
+        >
+          Будь-який майстер <span>Найближчий вільний час</span>
+        </SelectableCard>
+        {masters
+          ?.filter((master) =>
+            master.serviceIds.some(
+              (serviceId) => serviceId === selectedServiceId,
+            ),
+          )
+          .map((master) => {
+            return (
               <SelectableCard
+                key={master.id}
                 onSeleced={() => handleClick(master.id)}
                 isSelected={master.id === selectedMaster}
               >
                 {master.name}
                 <span>{master.specialization}</span>
               </SelectableCard>
-            </ul>
-          );
-        })}
+            );
+          })}
+      </ul>
     </div>
   );
 };
