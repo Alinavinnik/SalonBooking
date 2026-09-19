@@ -10,7 +10,7 @@ export const toggleSelection = ({ id, selectedItem }: toogleProps) => {
   return id;
 };
 
-export const getNextDays = (numberOfDays: number) => {
+export const getDate = (numberOfDays: number) => {
   const today = new Date();
   const dates: Date[] = [];
   for (let i = 0; i < numberOfDays; i++) {

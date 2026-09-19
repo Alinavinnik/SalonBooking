@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMasters } from "../../../api/mastersServices";
-import SelectableCard from "../SelectableCard/SelectableCard";
-import { toggleSelection } from "../helpers/helpers";
+import { getMasters } from "../../../../api/mastersServices";
+import SelectableCard from "../../SelectableCard/SelectableCard";
+import { toggleSelection } from "../../helpers/helpers";
 
 interface StepMasterProps {
   onSelect: (masterId: string | null) => void;

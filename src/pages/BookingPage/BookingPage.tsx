@@ -1,13 +1,15 @@
 import { useState } from "react";
-import ServiceStep from "../../components/BookingSteps/ServeceStep/ServiceStep";
+import ServiceStep from "../../components/BookingSteps/Steps/ServeceStep/ServiceStep";
 import css from "./BookingPage.module.css";
-import StepMaster from "../../components/BookingSteps/StepMaster/StepMaster";
+import StepMaster from "../../components/BookingSteps/Steps/StepMaster/StepMaster";
+import StepDate from "../../components/BookingSteps/Steps/StepDate/StepDate";
 
 const BookingPage = () => {
   const [selectedServiceId, setSelectedServiceId] = useState<string | null>(
     null,
   );
   const [selectedMasterId, setSelectedMasterId] = useState<string | null>(null);
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [currentStep, setCurrentStep] = useState(0);
   const lastStep = 5;
 
@@ -39,6 +41,13 @@ const BookingPage = () => {
             onSelect={setSelectedMasterId}
             selectedMaster={selectedMasterId}
             selectedServiceId={selectedServiceId}
+          />
+        )}
+        {currentStep === 2 && (
+          <StepDate
+            selectedDate={selectedDate}
+            onSelect={setSelectedDate}
+            selectedMasterId={selectedMasterId}
           />
         )}
         <div>

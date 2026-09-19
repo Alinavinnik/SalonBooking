@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { categories, services, type CategoryId } from "../data";
+import { categories, services, type CategoryId } from "../../data";
 import css from "./ServiceStep.module.css";
-import ButtonItem from "../SelectableCard/SelectableCard";
-import { toggleSelection } from "../helpers/helpers";
+import ButtonItem from "../../SelectableCard/SelectableCard";
+import { toggleSelection } from "../../helpers/helpers";
 
 interface ServiceStepProps {
   selectedServiceId: string | null;
