@@ -2,19 +2,27 @@ import { useQuery } from "@tanstack/react-query";
 import { services } from "../../data";
 import css from "./StepTime.module.css";
 import { getScheduleByMasterId } from "../../../../api/mastersServices";
-import { getHoursAndMinutes, timeinMinutes } from "../../helpers/helpers";
+import {
+  getHoursAndMinutes,
+  timeinMinutes,
+  toggleSelection,
+} from "../../helpers/helpers";
 import SelectableCard from "../../SelectableCard/SelectableCard";
 
 interface StepTimeProps {
   selectedServiceId: string | null;
   selectedMasterId: string | null;
   selectedDate: string | null;
+  onSelect: (time: string | null) => void;
+  selectedTime: string | null;
 }
 
 const StepTime = ({
   selectedMasterId,
   selectedServiceId,
   selectedDate,
+  onSelect,
+  selectedTime,
 }: StepTimeProps) => {
   const { data, isPending } = useQuery({
     queryKey: ["schedule", selectedMasterId],
@@ -56,12 +64,20 @@ const StepTime = ({
     availableTimes.push(timeInString);
     currentTime += slotInterval;
   }
-  console.log(availableTimes);
+  const handelClick = (time: string) => {
+    onSelect(toggleSelection({ id: time, selectedItem: selectedTime }));
+  };
   return (
     <div className={css.content}>
       <ul>
         {availableTimes.map((time) => (
-          <SelectableCard>{time}</SelectableCard>
+          <SelectableCard
+            key={time}
+            onSeleced={() => handelClick(time)}
+            isSelected={time === selectedTime}
+          >
+            {time}
+          </SelectableCard>
         ))}
       </ul>
     </div>

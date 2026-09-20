@@ -58,6 +58,8 @@ const BookingPage = () => {
             selectedServiceId={selectedServiceId}
             selectedMasterId={selectedMasterId}
             selectedDate={selectedDate}
+            onSelect={setSelectedTime}
+            selectedTime={selectedTime}
           />
         )}
         <div>
