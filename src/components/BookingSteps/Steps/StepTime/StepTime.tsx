@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { services } from "../../data";
 import css from "./StepTime.module.css";
-import { getScheduleByMasterId } from "../../../../api/mastersServices";
+import { getScheduleByMasterId } from "../../../../api/services";
 import {
   getHoursAndMinutes,
   getSlots,

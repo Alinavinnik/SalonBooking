@@ -48,6 +48,7 @@ const ServiceStep = ({
       <ul className={css.serviceSlots}>
         {filtredCategories.map((service) => (
           <SelectableCard
+            key={service.id}
             onSeleced={() => handleSelect(service.id)}
             isSelected={selectedServiceId === service.id}
           >

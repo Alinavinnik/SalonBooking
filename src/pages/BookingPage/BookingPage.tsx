@@ -49,6 +49,7 @@ const BookingPage = () => {
           )}
           {currentStep === 2 && (
             <StepDate
+              selectedServiceId={selectedServiceId}
               selectedDate={selectedDate}
               onSelect={setSelectedDate}
               selectedMasterId={selectedMasterId}

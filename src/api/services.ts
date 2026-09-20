@@ -25,7 +25,7 @@ interface ScheduleByMasterIdResponse {
   endTime: string;
 }
 
-export const getScheduleByMasterId = async (masterId: string) => {
+export const getScheduleByMasterId = async (masterId?: string) => {
   const { data } = await apiClient.get<ScheduleByMasterIdResponse[]>(
     "/schedules",
     {

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMasters } from "../../../../api/mastersServices";
+import { getMasters } from "../../../../api/services";
 import SelectableCard from "../../SelectableCard/SelectableCard";
 import { toggleSelection } from "../../helpers/helpers";
 import css from "./StepMaster.module.css";
