@@ -11,3 +11,8 @@
   gap: 20px;
   justify-content: center;
 }
+.serviceSlots {
+  display: grid;
+  grid-template-columns: repeat(2, 500px);
+  justify-content: center;
+}

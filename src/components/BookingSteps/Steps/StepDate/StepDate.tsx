@@ -42,7 +42,7 @@ const StepDate = ({
   return (
     <div className={css.content}>
       <h1>Оберіть Дату</h1>
-      <ul>
+      <ul className={css.dateSlots}>
         {availableDays.slice(0, 6).map((date, i) => {
           const dateValue = date.toISOString().split("T")[0];
           return (

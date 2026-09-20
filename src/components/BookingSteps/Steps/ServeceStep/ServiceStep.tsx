@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { categories, services, type CategoryId } from "../../data";
 import css from "./ServiceStep.module.css";
-import ButtonItem from "../../SelectableCard/SelectableCard";
+
 import { toggleSelection } from "../../helpers/helpers";
+import SelectableCard from "../../SelectableCard/SelectableCard";
 
 interface ServiceStepProps {
   selectedServiceId: string | null;
@@ -31,7 +32,7 @@ const ServiceStep = ({
   return (
     <div>
       <h2>Оберіть послугу</h2>
-      <div className={css.categories}>
+      <ul className={css.categories}>
         {categories.map((category) => (
           <button
             className={css.categoryBtn}
@@ -42,23 +43,22 @@ const ServiceStep = ({
             {category.label}
           </button>
         ))}
-      </div>
-      <div>
+      </ul>
+
+      <ul className={css.serviceSlots}>
         {filtredCategories.map((service) => (
-          <ul key={service.id}>
-            <ButtonItem
-              onSeleced={() => handleSelect(service.id)}
-              isSelected={selectedServiceId === service.id}
-            >
-              <span>{service.name}</span>
-              <span className={css.serviceInfo}>
-                <span>{service.price} грн</span>
-                <span>{service.duration} хв</span>
-              </span>
-            </ButtonItem>
-          </ul>
+          <SelectableCard
+            onSeleced={() => handleSelect(service.id)}
+            isSelected={selectedServiceId === service.id}
+          >
+            <span>{service.name}</span>
+            <span className={css.serviceInfo}>
+              <span>{service.price} грн</span>
+              <span>{service.duration} хв</span>
+            </span>
+          </SelectableCard>
         ))}
-      </div>
+      </ul>
     </div>
   );
 };

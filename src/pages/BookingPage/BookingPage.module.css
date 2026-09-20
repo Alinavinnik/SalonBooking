@@ -2,6 +2,7 @@
   text-align: center;
 }
 .btnContainer {
+  justify-content: center;
   display: flex;
   gap: 200px;
 }

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getMasters } from "../../../../api/mastersServices";
 import SelectableCard from "../../SelectableCard/SelectableCard";
 import { toggleSelection } from "../../helpers/helpers";
+import css from "./StepMaster.module.css";
 
 interface StepMasterProps {
   onSelect: (masterId: string | null) => void;
@@ -25,7 +26,7 @@ const StepMaster = ({
   return (
     <div>
       <h2>Оберіть майстра</h2>
-      <ul>
+      <ul className={css.masterSlots}>
         <SelectableCard
           onSeleced={() => handleClick(ANY_MASTER)}
           isSelected={ANY_MASTER === selectedMaster}

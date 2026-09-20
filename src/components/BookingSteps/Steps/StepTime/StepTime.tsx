@@ -61,7 +61,8 @@ const StepTime = ({
   };
   return (
     <div className={css.content}>
-      <ul>
+      <h1>Оберіть час </h1>
+      <ul className={css.timeSlots}>
         {slots.map((time) => (
           <SelectableCard
             key={time}
