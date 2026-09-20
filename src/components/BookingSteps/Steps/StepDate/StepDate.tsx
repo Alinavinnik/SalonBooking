@@ -17,7 +17,7 @@ const StepDate = ({
 }: StepDateProps) => {
   const dates = getDate(14);
   const { data } = useQuery({
-    queryKey: ["schedule"],
+    queryKey: ["schedule", selectedMasterId],
     queryFn: () => {
       if (!selectedMasterId) {
         return;

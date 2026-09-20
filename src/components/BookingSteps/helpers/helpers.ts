@@ -20,3 +20,9 @@ export const getDate = (numberOfDays: number) => {
   }
   return dates;
 };
+
+export const getHoursAndMinutes = (time: string) =>
+  time.split(":").map((time) => Number(time));
+
+export const timeinMinutes = (hour: number, minutes: number) =>
+  hour * 60 + minutes;
