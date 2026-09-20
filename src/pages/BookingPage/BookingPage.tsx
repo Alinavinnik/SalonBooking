@@ -25,6 +25,7 @@ const BookingPage = () => {
     if (currentStep === 0) return !selectedServiceId;
     if (currentStep === 1) return !selectedMasterId;
     if (currentStep === 2) return !selectedDate;
+    if (currentStep === 3) return !selectedTime;
     return false;
   };
   const isNextDisabled = getIsNextDisabled();
@@ -32,44 +33,46 @@ const BookingPage = () => {
   return (
     <section className={css.booking}>
       <div className="container">
-        <h1></h1>
-        {currentStep === 0 && (
-          <ServiceStep
-            selectedServiceId={selectedServiceId}
-            onSelectService={setSelectedServiceId}
-          />
-        )}
-        {currentStep === 1 && (
-          <StepMaster
-            onSelect={setSelectedMasterId}
-            selectedMaster={selectedMasterId}
-            selectedServiceId={selectedServiceId}
-          />
-        )}
-        {currentStep === 2 && (
-          <StepDate
-            selectedDate={selectedDate}
-            onSelect={setSelectedDate}
-            selectedMasterId={selectedMasterId}
-          />
-        )}
-        {currentStep === 3 && (
-          <StepTime
-            selectedServiceId={selectedServiceId}
-            selectedMasterId={selectedMasterId}
-            selectedDate={selectedDate}
-            onSelect={setSelectedTime}
-            selectedTime={selectedTime}
-          />
-        )}
-        <div>
+        <div className={css.formContant}>
+          {currentStep === 0 && (
+            <ServiceStep
+              selectedServiceId={selectedServiceId}
+              onSelectService={setSelectedServiceId}
+            />
+          )}
+          {currentStep === 1 && (
+            <StepMaster
+              onSelect={setSelectedMasterId}
+              selectedMaster={selectedMasterId}
+              selectedServiceId={selectedServiceId}
+            />
+          )}
+          {currentStep === 2 && (
+            <StepDate
+              selectedDate={selectedDate}
+              onSelect={setSelectedDate}
+              selectedMasterId={selectedMasterId}
+            />
+          )}
+          {currentStep === 3 && (
+            <StepTime
+              selectedServiceId={selectedServiceId}
+              selectedMasterId={selectedMasterId}
+              selectedDate={selectedDate}
+              onSelect={setSelectedTime}
+              selectedTime={selectedTime}
+            />
+          )}
+        </div>
+        <div className={css.btnContainer}>
           {currentStep > 0 && (
-            <button type="button" onClick={handleBack}>
+            <button className={css.backBtn} type="button" onClick={handleBack}>
               Назад
             </button>
           )}
           {currentStep < lastStep && (
             <button
+              className={css.nextBtn}
               type="button"
               onClick={handleNext}
               disabled={isNextDisabled}

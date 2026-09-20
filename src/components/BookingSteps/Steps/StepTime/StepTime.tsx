@@ -4,6 +4,7 @@ import css from "./StepTime.module.css";
 import { getScheduleByMasterId } from "../../../../api/mastersServices";
 import {
   getHoursAndMinutes,
+  getSlots,
   timeinMinutes,
   toggleSelection,
 } from "../../helpers/helpers";
@@ -53,24 +54,15 @@ const StepTime = ({
   );
   const serviseDuration = selectedService?.duration;
 
-  const slotInterval = 30;
-  let currentTime = startTimeInMinutes;
-  const availableTimes = [];
-  while (serviseDuration && currentTime + serviseDuration <= endTimeInMinutes) {
-    const hours = Math.floor(currentTime / 60);
-    const minutes = currentTime % 60;
-    const timeInString = `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}`;
+  const slots = getSlots(startTimeInMinutes, serviseDuration, endTimeInMinutes);
 
-    availableTimes.push(timeInString);
-    currentTime += slotInterval;
-  }
   const handelClick = (time: string) => {
     onSelect(toggleSelection({ id: time, selectedItem: selectedTime }));
   };
   return (
     <div className={css.content}>
       <ul>
-        {availableTimes.map((time) => (
+        {slots.map((time) => (
           <SelectableCard
             key={time}
             onSeleced={() => handelClick(time)}

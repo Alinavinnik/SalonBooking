@@ -1,3 +1,19 @@
 .booking {
   text-align: center;
 }
+.btnContainer {
+  display: flex;
+  gap: 200px;
+}
+.nextBtn,
+.backBtn {
+  padding: 15px 30px;
+  background-color: rgb(220, 143, 184);
+  border-radius: 100px;
+}
+.nextBtn:disabled {
+  background-color: rgb(213, 208, 211);
+}
+.formContant {
+  margin-bottom: 20px;
+}
