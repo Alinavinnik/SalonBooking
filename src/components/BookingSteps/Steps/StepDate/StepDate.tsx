@@ -29,6 +29,8 @@ const StepDate = ({
   );
   const availableMasterIds = availableMasters?.map((master) => master.id);
 
+  console.log(availableMasterIds);
+
   const { data: schedules } = useQuery({
     queryKey: ["schedule", selectedMasterId],
     queryFn: () => {
@@ -42,11 +44,21 @@ const StepDate = ({
     },
     enabled: !!selectedMasterId,
   });
+  console.log(schedules);
 
   const availableMaterSchedule = schedules?.filter((schedule) =>
     availableMasterIds?.includes(schedule.masterId),
   );
+  console.log(availableMaterSchedule);
 
+  const availableDays = dates.filter((date) => {
+    if (selectedMasterId === "any") {
+      return availableMaterSchedule?.some((master) =>
+        master.workingDays.includes(date.getDay()),
+      );
+    }
+    return schedules?.[0].workingDays.includes(date.getDay());
+  });
   const handleClick = (dateValue: string) => {
     onSelect(
       toggleSelection({
@@ -55,9 +67,6 @@ const StepDate = ({
       }),
     );
   };
-  const availableDays = dates.filter((date) =>
-    schedules?.[0].workingDays.includes(date.getDay()),
-  );
 
   return (
     <div className={css.content}>
