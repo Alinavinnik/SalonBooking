@@ -29,8 +29,6 @@ const StepDate = ({
   );
   const availableMasterIds = availableMasters?.map((master) => master.id);
 
-  console.log(availableMasterIds);
-
   const { data: schedules } = useQuery({
     queryKey: ["schedule", selectedMasterId],
     queryFn: () => {

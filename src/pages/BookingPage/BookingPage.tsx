@@ -12,6 +12,7 @@ const BookingPage = () => {
   const [selectedMasterId, setSelectedMasterId] = useState<string | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
+
   const [currentStep, setCurrentStep] = useState(0);
   const lastStep = 5;
 
