@@ -27,10 +27,9 @@ const StepDate = ({
   const availableMasters = masters?.filter((master) =>
     master.serviceIds.some((service) => service === selectedServiceId),
   );
-
   const availableMasterIds = availableMasters?.map((master) => master.id);
 
-  const { data } = useQuery({
+  const { data: schedules } = useQuery({
     queryKey: ["schedule", selectedMasterId],
     queryFn: () => {
       if (!selectedMasterId) {
@@ -44,7 +43,7 @@ const StepDate = ({
     enabled: !!selectedMasterId,
   });
 
-  const availableMaterSchedule = data?.filter((schedule) =>
+  const availableMaterSchedule = schedules?.filter((schedule) =>
     availableMasterIds?.includes(schedule.masterId),
   );
 
@@ -57,7 +56,7 @@ const StepDate = ({
     );
   };
   const availableDays = dates.filter((date) =>
-    data?.[0].workingDays.includes(date.getDay()),
+    schedules?.[0].workingDays.includes(date.getDay()),
   );
 
   return (
