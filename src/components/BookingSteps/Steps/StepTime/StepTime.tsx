@@ -68,8 +68,8 @@ const StepTime = ({
     return schedule.workingDays.includes(dayOfWeek);
   });
 
-  const service = services.find((servise) => servise.id === selectedServiceId);
-  const serviseDuration = service?.duration;
+  const service = services.find((service) => service.id === selectedServiceId);
+  const serviceDuration = service?.duration;
 
   const slots = workingSchedules.flatMap((schedule) => {
     const [startHours, startMinutes] = getHoursAndMinutes(schedule.startTime);
@@ -78,14 +78,14 @@ const StepTime = ({
     const endTimeInMinutes = timeinMinutes(endHours, endMinutes);
     const slots = getSlots(
       startTimeInMinutes,
-      serviseDuration,
+      serviceDuration,
       endTimeInMinutes,
     );
     return slots;
   });
 
-  const filteredSlots = [...new Set(slots)];
-  const handelClick = (time: string) => {
+  const filteredSlots = [...new Set(slots)].sort();
+  const handleClick = (time: string) => {
     onSelect(toggleSelection({ id: time, selectedItem: selectedTime }));
   };
   return (
@@ -95,7 +95,7 @@ const StepTime = ({
         {filteredSlots.map((time) => (
           <SelectableCard
             key={time}
-            onSeleced={() => handelClick(time)}
+            onSeleced={() => handleClick(time)}
             isSelected={time === selectedTime}
           >
             {time}
