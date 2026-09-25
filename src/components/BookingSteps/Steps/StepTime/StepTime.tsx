@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { services } from "../../data";
 import css from "./StepTime.module.css";
-import { getMasters, getScheduleByMasterId } from "../../../../api/services";
+import { getScheduleByMasterId } from "../../../../api/services";
 import {
   getHoursAndMinutes,
   getSlots,
@@ -9,6 +9,7 @@ import {
   toggleSelection,
 } from "../../helpers/helpers";
 import SelectableCard from "../../SelectableCard/SelectableCard";
+import { useMasters } from "../../../../hooks/hooks";
 
 interface StepTimeProps {
   selectedServiceId: string | null;
@@ -37,10 +38,9 @@ const StepTime = ({
     },
     enabled: !!selectedMasterId,
   });
-  const { data: masters } = useQuery({
-    queryKey: ["masters"],
-    queryFn: getMasters,
-  });
+
+  const masters = useMasters();
+
   const availableMasters = masters?.filter((master) =>
     master.serviceIds.some((service) => service === selectedServiceId),
   );

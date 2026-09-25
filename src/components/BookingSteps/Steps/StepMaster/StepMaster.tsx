@@ -1,8 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { getMasters } from "../../../../api/services";
 import SelectableCard from "../../SelectableCard/SelectableCard";
 import { toggleSelection } from "../../helpers/helpers";
 import css from "./StepMaster.module.css";
+import { useMasters } from "../../../../hooks/hooks";
 
 interface StepMasterProps {
   onSelect: (masterId: string | null) => void;
@@ -16,10 +15,7 @@ const StepMaster = ({
   selectedMaster,
   selectedServiceId,
 }: StepMasterProps) => {
-  const { data: masters } = useQuery({
-    queryKey: ["masters"],
-    queryFn: getMasters,
-  });
+  const masters = useMasters();
   const handleClick = (masterId: string) => {
     onSelect(toggleSelection({ id: masterId, selectedItem: selectedMaster }));
   };

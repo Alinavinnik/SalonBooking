@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMasters, getScheduleByMasterId } from "../../../../api/services";
+import { getScheduleByMasterId } from "../../../../api/services";
 import { getDate, toggleSelection } from "../../helpers/helpers";
 import SelectableCard from "../../SelectableCard/SelectableCard";
 import css from "./StepDate.module.css";
+import { useMasters } from "../../../../hooks/hooks";
 
 interface StepDateProps {
   onSelect: (date: string | null) => void;
@@ -19,10 +20,7 @@ const StepDate = ({
 }: StepDateProps) => {
   const dates = getDate(14);
 
-  const { data: masters } = useQuery({
-    queryKey: ["masters"],
-    queryFn: getMasters,
-  });
+  const masters = useMasters();
 
   const availableMasters = masters?.filter((master) =>
     master.serviceIds.some((service) => service === selectedServiceId),
