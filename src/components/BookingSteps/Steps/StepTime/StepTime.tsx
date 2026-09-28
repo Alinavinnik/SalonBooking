@@ -6,6 +6,7 @@ import {
   getHoursAndMinutes,
   getSlots,
   timeInMinutes,
+  timeInString,
   toggleSelection,
 } from "../../helpers/helpers";
 import SelectableCard from "../../SelectableCard/SelectableCard";
@@ -121,7 +122,9 @@ const StepTime = ({
     );
     return !hasConflict;
   });
- const availableSlotsTime=
+  const availableSlotsTime = availableSlots
+    .map((slot) => slot.start)
+    .map((slot) => timeInString(slot));
 
   const handleClick = (time: string) => {
     onSelect(toggleSelection({ id: time, selectedItem: selectedTime }));
@@ -140,7 +143,7 @@ const StepTime = ({
     <div className={css.content}>
       <h1>Оберіть час </h1>
       <ul className={css.timeSlots}>
-        {filteredSlots.map((time) => (
+        {availableSlotsTime.map((time) => (
           <SelectableCard
             key={time}
             onSelected={() => handleClick(time)}
