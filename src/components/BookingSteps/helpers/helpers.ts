@@ -1,9 +1,9 @@
-interface toogleProps {
+interface toggleProps {
   id: string;
   selectedItem: string | null;
 }
 
-export const toggleSelection = ({ id, selectedItem }: toogleProps) => {
+export const toggleSelection = ({ id, selectedItem }: toggleProps) => {
   if (id === selectedItem) {
     return null;
   }
@@ -24,7 +24,7 @@ export const getDate = (numberOfDays: number) => {
 export const getHoursAndMinutes = (time: string) =>
   time.split(":").map((time) => Number(time));
 
-export const timeinMinutes = (hour: number, minutes: number) =>
+export const timeInMinutes = (hour: number, minutes: number) =>
   hour * 60 + minutes;
 
 export const getSlots = (

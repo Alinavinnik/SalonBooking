@@ -4,19 +4,19 @@ import css from "./SelectableCard.module.css";
 interface SelectableCardProps {
   children: ReactNode;
   isSelected: boolean;
-  onSeleced: () => void;
+  onSelected: () => void;
 }
 
 const SelectableCard = ({
   children,
   isSelected,
-  onSeleced,
+  onSelected: onSelected,
 }: SelectableCardProps) => {
   return (
     <li>
       <button
         type="button"
-        onClick={onSeleced}
+        onClick={onSelected}
         className={css.serviceButton}
         aria-pressed={isSelected}
       >

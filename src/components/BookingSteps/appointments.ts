@@ -38,7 +38,7 @@ export const appointments: Appointment[] = [
   },
   {
     id: "appointment-4",
-    serviceId: "nails-1",
+    serviceId: "hair-5",
     masterId: "master-3",
     date: "2026-09-29",
     time: "12:00",

@@ -19,7 +19,7 @@ const ServiceStep = ({
     setSelectedCategory(categoryId);
   };
 
-  const filtredCategories = services.filter(
+  const filteredCategories = services.filter(
     (category) => category.category === selectedCategory,
   );
 
@@ -46,10 +46,10 @@ const ServiceStep = ({
       </ul>
 
       <ul className={css.serviceSlots}>
-        {filtredCategories.map((service) => (
+        {filteredCategories.map((service) => (
           <SelectableCard
             key={service.id}
-            onSeleced={() => handleSelect(service.id)}
+            onSelected={() => handleSelect(service.id)}
             isSelected={selectedServiceId === service.id}
           >
             <span>{service.name}</span>

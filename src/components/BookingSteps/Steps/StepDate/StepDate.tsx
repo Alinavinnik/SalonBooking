@@ -73,7 +73,7 @@ const StepDate = ({
           return (
             <SelectableCard
               key={i}
-              onSeleced={() => handleClick(dateValue)}
+              onSelected={() => handleClick(dateValue)}
               isSelected={selectedDate === dateValue}
             >
               <span>

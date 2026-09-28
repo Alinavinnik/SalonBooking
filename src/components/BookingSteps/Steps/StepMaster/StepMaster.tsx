@@ -24,7 +24,7 @@ const StepMaster = ({
       <h2>Оберіть майстра</h2>
       <ul className={css.masterSlots}>
         <SelectableCard
-          onSeleced={() => handleClick(ANY_MASTER)}
+          onSelected={() => handleClick(ANY_MASTER)}
           isSelected={ANY_MASTER === selectedMaster}
         >
           Будь-який майстер <span>Найближчий вільний час</span>
@@ -39,7 +39,7 @@ const StepMaster = ({
             return (
               <SelectableCard
                 key={master.id}
-                onSeleced={() => handleClick(master.id)}
+                onSelected={() => handleClick(master.id)}
                 isSelected={master.id === selectedMaster}
               >
                 {master.name}

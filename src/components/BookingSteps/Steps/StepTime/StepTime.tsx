@@ -5,11 +5,12 @@ import { getScheduleByMasterId } from "../../../../api/services";
 import {
   getHoursAndMinutes,
   getSlots,
-  timeinMinutes,
+  timeInMinutes,
   toggleSelection,
 } from "../../helpers/helpers";
 import SelectableCard from "../../SelectableCard/SelectableCard";
 import { useMasters } from "../../../../hooks/hooks";
+import { appointments } from "../../appointments";
 
 interface StepTimeProps {
   selectedServiceId: string | null;
@@ -73,9 +74,9 @@ const StepTime = ({
 
   const slots = workingSchedules.flatMap((schedule) => {
     const [startHours, startMinutes] = getHoursAndMinutes(schedule.startTime);
-    const startTimeInMinutes = timeinMinutes(startHours, startMinutes);
+    const startTimeInMinutes = timeInMinutes(startHours, startMinutes);
     const [endHours, endMinutes] = getHoursAndMinutes(schedule.endTime);
-    const endTimeInMinutes = timeinMinutes(endHours, endMinutes);
+    const endTimeInMinutes = timeInMinutes(endHours, endMinutes);
     const slots = getSlots(
       startTimeInMinutes,
       serviceDuration,
@@ -88,6 +89,26 @@ const StepTime = ({
   const handleClick = (time: string) => {
     onSelect(toggleSelection({ id: time, selectedItem: selectedTime }));
   };
+  const appointmentsForSelectedDate = appointments.filter(
+    (appointment) =>
+      appointment.masterId === selectedMasterId &&
+      appointment.date === selectedDate,
+  );
+
+  const appointmentsIntervals = appointmentsForSelectedDate.map(
+    (appointment) => {
+      const [appointmentHours, appointmentMinutes] = getHoursAndMinutes(
+        appointment.time,
+      );
+      const start = timeInMinutes(appointmentHours, appointmentMinutes);
+      const service = services.find(
+        (service) => service.id === appointment.serviceId,
+      );
+
+      return { start, duration: service?.duration };
+    },
+  );
+
   return (
     <div className={css.content}>
       <h1>Оберіть час </h1>
@@ -95,7 +116,7 @@ const StepTime = ({
         {filteredSlots.map((time) => (
           <SelectableCard
             key={time}
-            onSeleced={() => handleClick(time)}
+            onSelected={() => handleClick(time)}
             isSelected={time === selectedTime}
           >
             {time}
