@@ -46,20 +46,13 @@ const StepTime = ({
     master.serviceIds.some((service) => service === selectedServiceId),
   );
   const availableMasterIds = availableMasters?.map((master) => master.id);
-
-  if (isPending) {
-    return <p>Завантаження...</p>;
-  }
-  if (!schedules?.[0]) {
-    return <p>Розклад майстра не знайдено</p>;
-  }
   if (!selectedDate) {
-    return <p></p>;
+    return;
   }
   const date = new Date(selectedDate);
   const dayOfWeek = date.getDay();
 
-  const workingSchedules = schedules.filter((schedule) => {
+  const workingSchedules = schedules?.filter((schedule) => {
     if (selectedMasterId === "any") {
       return (
         availableMasterIds?.includes(schedule.masterId) &&
@@ -72,23 +65,6 @@ const StepTime = ({
   const service = services.find((service) => service.id === selectedServiceId);
   const serviceDuration = service?.duration;
 
-  const slots = workingSchedules.flatMap((schedule) => {
-    const [startHours, startMinutes] = getHoursAndMinutes(schedule.startTime);
-    const startTimeInMinutes = timeInMinutes(startHours, startMinutes);
-    const [endHours, endMinutes] = getHoursAndMinutes(schedule.endTime);
-    const endTimeInMinutes = timeInMinutes(endHours, endMinutes);
-    const slots = getSlots(
-      startTimeInMinutes,
-      serviceDuration,
-      endTimeInMinutes,
-    );
-    return slots;
-  });
-
-  const filteredSlots = [...new Set(slots)].sort();
-  const handleClick = (time: string) => {
-    onSelect(toggleSelection({ id: time, selectedItem: selectedTime }));
-  };
   const appointmentsForSelectedDate = appointments.filter(
     (appointment) =>
       appointment.masterId === selectedMasterId &&
@@ -104,10 +80,61 @@ const StepTime = ({
       const service = services.find(
         (service) => service.id === appointment.serviceId,
       );
+      const duration = service?.duration || 0;
 
-      return { start, duration: service?.duration };
+      return { start, duration, end: start + duration };
     },
   );
+  console.log(appointmentsIntervals);
+
+  const slots = workingSchedules?.flatMap((schedule) => {
+    const [startHours, startMinutes] = getHoursAndMinutes(schedule.startTime);
+    const startTimeInMinutes = timeInMinutes(startHours, startMinutes);
+    const [endHours, endMinutes] = getHoursAndMinutes(schedule.endTime);
+    const endTimeInMinutes = timeInMinutes(endHours, endMinutes);
+    const slots = getSlots(
+      startTimeInMinutes,
+      serviceDuration,
+      endTimeInMinutes,
+    );
+    return slots;
+  });
+
+  const filteredSlots = [...new Set(slots)].sort();
+  if (!serviceDuration) {
+    return;
+  }
+  const slotsInMinutes = filteredSlots.map((slot) => {
+    const [hours, minutes] = getHoursAndMinutes(slot);
+
+    const start = timeInMinutes(hours, minutes);
+
+    return {
+      start,
+      end: start + serviceDuration,
+    };
+  });
+  const availableSlots = slotsInMinutes.filter((slot) => {
+    const hasConflict = appointmentsIntervals.some(
+      (appointment) =>
+        slot.start < appointment.end && slot.end > appointment.start,
+    );
+    return !hasConflict;
+  });
+ const availableSlotsTime=
+
+  const handleClick = (time: string) => {
+    onSelect(toggleSelection({ id: time, selectedItem: selectedTime }));
+  };
+  if (isPending) {
+    return <p>Завантаження...</p>;
+  }
+  if (!schedules?.[0]) {
+    return <p>Розклад майстра не знайдено</p>;
+  }
+  if (!selectedDate) {
+    return <p></p>;
+  }
 
   return (
     <div className={css.content}>
