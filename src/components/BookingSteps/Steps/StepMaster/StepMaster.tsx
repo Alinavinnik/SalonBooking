@@ -1,5 +1,5 @@
 import SelectableCard from "../../SelectableCard/SelectableCard";
-import { toggleSelection } from "../../helpers/helpers";
+import { toggleSelection } from "../../helpers/selection";
 import css from "./StepMaster.module.css";
 import { useMasters } from "../../../../hooks/hooks";
 

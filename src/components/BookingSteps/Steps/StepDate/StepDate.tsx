@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { getScheduleByMasterId } from "../../../../api/services";
-import { getDate, toggleSelection } from "../../helpers/helpers";
+import { getDate } from "../../helpers/date";
+import { toggleSelection } from "../../helpers/selection";
 import SelectableCard from "../../SelectableCard/SelectableCard";
 import css from "./StepDate.module.css";
 import { useMasters } from "../../../../hooks/hooks";

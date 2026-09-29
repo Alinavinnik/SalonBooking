@@ -2,7 +2,7 @@ import { useState } from "react";
 import { categories, services, type CategoryId } from "../../data";
 import css from "./ServiceStep.module.css";
 
-import { toggleSelection } from "../../helpers/helpers";
+import { toggleSelection } from "../../helpers/selection";
 import SelectableCard from "../../SelectableCard/SelectableCard";
 
 interface ServiceStepProps {

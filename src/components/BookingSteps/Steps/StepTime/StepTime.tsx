@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { services } from "../../data";
 import css from "./StepTime.module.css";
 import { getScheduleByMasterId } from "../../../../api/services";
-import { getSlots } from "../../helpers/slots";
+import { getAvailableSlots, getSlots } from "../../helpers/slots";
 import {
   timeInMinutes,
   getHoursAndMinutes,
@@ -86,7 +86,6 @@ const StepTime = ({
       return { start, duration, end: start + duration };
     },
   );
-  console.log(appointmentsIntervals);
 
   const slots = workingSchedules?.flatMap((schedule) => {
     const [startHours, startMinutes] = getHoursAndMinutes(schedule.startTime);
@@ -115,13 +114,20 @@ const StepTime = ({
       end: start + serviceDuration,
     };
   });
-  const availableSlots = slotsInMinutes.filter((slot) => {
-    const hasConflict = appointmentsIntervals.some(
-      (appointment) =>
-        slot.start < appointment.end && slot.end > appointment.start,
-    );
-    return !hasConflict;
-  });
+
+  // const availableSlots = slotsInMinutes.filter((slot) => {
+  //   const hasConflict = appointmentsIntervals.some(
+  //     (appointment) =>
+  //       slot.start < appointment.end && slot.end > appointment.start,
+  //   );
+  //   return !hasConflict;
+  // });
+  const availableSlots = getAvailableSlots(
+    slotsInMinutes,
+    appointmentsIntervals,
+  );
+  console.log(availableSlots);
+
   const availableSlotsTime = availableSlots
     .map((slot) => slot.start)
     .map((slot) => timeInString(slot));

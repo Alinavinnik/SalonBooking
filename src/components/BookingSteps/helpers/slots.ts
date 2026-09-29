@@ -16,3 +16,26 @@ export const getSlots = (
   }
   return availableTimes;
 };
+
+interface Appointment {
+  start: number;
+  end: number;
+}
+interface TimeInterval {
+  start: number;
+  end: number;
+}
+
+export const getAvailableSlots = (
+  slots: TimeInterval[],
+  appointments: Appointment[],
+) => {
+  const availableSlots = slots.filter((slot) => {
+    const hasConflict = appointments.some(
+      (appointment) =>
+        slot.start < appointment.end && slot.end > appointment.start,
+    );
+    return !hasConflict;
+  });
+  return availableSlots;
+};
