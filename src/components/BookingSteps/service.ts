@@ -1,22 +1,4 @@
-export type CategoryId = "hair" | "nails" | "brows";
-
-type Category = {
-  id: CategoryId;
-  label: string;
-};
-export const categories: Category[] = [
-  { id: "hair", label: "Волосся" },
-  { id: "nails", label: "Нігті" },
-  { id: "brows", label: "Брови" },
-];
-
-type Service = {
-  id: string;
-  category: string;
-  name: string;
-  duration: number;
-  price: number;
-};
+import type { Service } from "./types/types";
 
 export const services: Service[] = [
   // Волосся

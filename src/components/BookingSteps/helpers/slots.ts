@@ -1,3 +1,11 @@
+import type {
+  Appointment,
+  AppointmentInterval,
+  Service,
+  TimeInterval,
+} from "../types/types";
+import { getHoursAndMinutes, timeInMinutes } from "./time";
+
 export const getSlots = (
   startTime: number,
   duration: number | undefined,
@@ -17,18 +25,9 @@ export const getSlots = (
   return availableTimes;
 };
 
-interface Appointment {
-  start: number;
-  end: number;
-}
-interface TimeInterval {
-  start: number;
-  end: number;
-}
-
 export const getAvailableSlots = (
   slots: TimeInterval[],
-  appointments: Appointment[],
+  appointments: AppointmentInterval[],
 ) => {
   const availableSlots = slots.filter((slot) => {
     const hasConflict = appointments.some(
@@ -38,4 +37,23 @@ export const getAvailableSlots = (
     return !hasConflict;
   });
   return availableSlots;
+};
+
+export const getAppointmentsIntervals = (
+  appointmentInterval: Appointment[],
+  services: Service[],
+) => {
+  const appointmentsIntervals = appointmentInterval.map((appointment) => {
+    const [appointmentHours, appointmentMinutes] = getHoursAndMinutes(
+      appointment.time,
+    );
+    const start = timeInMinutes(appointmentHours, appointmentMinutes);
+    const service = services.find(
+      (service) => service.id === appointment.serviceId,
+    );
+    const duration = service?.duration || 0;
+
+    return { start, duration, end: start + duration };
+  });
+  return appointmentsIntervals;
 };
