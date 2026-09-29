@@ -24,6 +24,19 @@ export const getSlots = (
   }
   return availableTimes;
 };
+export const getSlotsIntervals = (slots: string[], serviceDuration: number) => {
+  const slotIntervals = slots.map((slot) => {
+    const [hours, minutes] = getHoursAndMinutes(slot);
+
+    const start = timeInMinutes(hours, minutes);
+
+    return {
+      start,
+      end: start + serviceDuration,
+    };
+  });
+  return slotIntervals;
+};
 
 export const getAvailableSlots = (
   slots: TimeInterval[],

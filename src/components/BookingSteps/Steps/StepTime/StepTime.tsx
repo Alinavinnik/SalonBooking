@@ -6,6 +6,7 @@ import {
   getAppointmentsIntervals,
   getAvailableSlots,
   getSlots,
+  getSlotsIntervals,
 } from "../../helpers/slots";
 import {
   timeInMinutes,
@@ -98,19 +99,11 @@ const StepTime = ({
   if (!serviceDuration) {
     return;
   }
-  const slotsInMinutes = filteredSlots.map((slot) => {
-    const [hours, minutes] = getHoursAndMinutes(slot);
 
-    const start = timeInMinutes(hours, minutes);
-
-    return {
-      start,
-      end: start + serviceDuration,
-    };
-  });
+  const slotIntervals = getSlotsIntervals(filteredSlots, serviceDuration);
 
   const availableSlots = getAvailableSlots(
-    slotsInMinutes,
+    slotIntervals,
     appointmentsIntervals,
   );
 

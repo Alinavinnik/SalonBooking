@@ -41,12 +41,10 @@ const StepDate = ({
     },
     enabled: !!selectedMasterId,
   });
-  console.log(schedules);
 
   const availableMaterSchedule = schedules?.filter((schedule) =>
     availableMasterIds?.includes(schedule.masterId),
   );
-  console.log(availableMaterSchedule);
 
   const availableDays = dates.filter((date) => {
     if (selectedMasterId === "any") {
