@@ -2,13 +2,13 @@ import { useQuery } from "@tanstack/react-query";
 import { services } from "../../data";
 import css from "./StepTime.module.css";
 import { getScheduleByMasterId } from "../../../../api/services";
+import { getSlots } from "../../helpers/slots";
 import {
-  getHoursAndMinutes,
-  getSlots,
   timeInMinutes,
+  getHoursAndMinutes,
   timeInString,
-  toggleSelection,
-} from "../../helpers/helpers";
+} from "../../helpers/time";
+import { toggleSelection } from "../../helpers/selection";
 import SelectableCard from "../../SelectableCard/SelectableCard";
 import { useMasters } from "../../../../hooks/hooks";
 import { appointments } from "../../appointments";
