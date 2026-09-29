@@ -1,6 +1,7 @@
 import type {
   Appointment,
   AppointmentInterval,
+  Schedule,
   Service,
   TimeInterval,
 } from "../types/types";
@@ -50,6 +51,25 @@ export const getAvailableSlots = (
     return !hasConflict;
   });
   return availableSlots;
+};
+
+export const getSlotsFromSchedule = (
+  workingSchedules: Schedule[],
+  serviceDuration: number,
+) => {
+  const slotsFromSchedule = workingSchedules.flatMap((schedule) => {
+    const [startHours, startMinutes] = getHoursAndMinutes(schedule.startTime);
+    const startTimeInMinutes = timeInMinutes(startHours, startMinutes);
+    const [endHours, endMinutes] = getHoursAndMinutes(schedule.endTime);
+    const endTimeInMinutes = timeInMinutes(endHours, endMinutes);
+    const slots = getSlots(
+      startTimeInMinutes,
+      serviceDuration,
+      endTimeInMinutes,
+    );
+    return slots;
+  });
+  return slotsFromSchedule;
 };
 
 export const getAppointmentsIntervals = (

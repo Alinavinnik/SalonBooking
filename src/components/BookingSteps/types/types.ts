@@ -17,6 +17,13 @@ export type Service = {
   duration: number;
   price: number;
 };
+export interface Schedule {
+  endTime: string;
+  id: string;
+  masterId: string;
+  startTime: string;
+  workingDays: number[];
+}
 
 export interface ToggleProps {
   id: string;

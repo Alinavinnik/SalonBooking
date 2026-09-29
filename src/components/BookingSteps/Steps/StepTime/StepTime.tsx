@@ -5,14 +5,10 @@ import { getScheduleByMasterId } from "../../../../api/services";
 import {
   getAppointmentsIntervals,
   getAvailableSlots,
-  getSlots,
+  getSlotsFromSchedule,
   getSlotsIntervals,
 } from "../../helpers/slots";
-import {
-  timeInMinutes,
-  getHoursAndMinutes,
-  timeInString,
-} from "../../helpers/time";
+import { timeInString } from "../../helpers/time";
 import { toggleSelection } from "../../helpers/selection";
 import SelectableCard from "../../SelectableCard/SelectableCard";
 import { useMasters } from "../../../../hooks/hooks";
@@ -82,18 +78,10 @@ const StepTime = ({
     services,
   );
 
-  const slots = workingSchedules?.flatMap((schedule) => {
-    const [startHours, startMinutes] = getHoursAndMinutes(schedule.startTime);
-    const startTimeInMinutes = timeInMinutes(startHours, startMinutes);
-    const [endHours, endMinutes] = getHoursAndMinutes(schedule.endTime);
-    const endTimeInMinutes = timeInMinutes(endHours, endMinutes);
-    const slots = getSlots(
-      startTimeInMinutes,
-      serviceDuration,
-      endTimeInMinutes,
-    );
-    return slots;
-  });
+  if (!workingSchedules) return;
+  if (!serviceDuration) return;
+
+  const slots = getSlotsFromSchedule(workingSchedules, serviceDuration);
 
   const filteredSlots = [...new Set(slots)].sort();
   if (!serviceDuration) {
