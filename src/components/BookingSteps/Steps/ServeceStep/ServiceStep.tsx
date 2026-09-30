@@ -31,7 +31,7 @@ const ServiceStep = ({
   };
 
   return (
-    <div>
+    <div className="container">
       <h2>Оберіть послугу</h2>
       <ul className={css.categories}>
         {categories.map((category) => (
@@ -53,7 +53,7 @@ const ServiceStep = ({
             onSelected={() => handleSelect(service.id)}
             isSelected={selectedServiceId === service.id}
           >
-            <span>{service.name}</span>
+            <span className={css.categoryName}>{service.name}</span>
             <span className={css.serviceInfo}>
               <span>{service.price} грн</span>
               <span>{service.duration} хв</span>
