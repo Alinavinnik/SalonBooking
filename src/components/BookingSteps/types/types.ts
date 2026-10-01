@@ -38,6 +38,11 @@ export interface AppointmentInterval {
 export interface TimeInterval {
   start: number;
   end: number;
+  masterId: string;
+}
+export interface SlotInterval {
+  time: string;
+  masterId: string;
 }
 
 export interface Appointment {

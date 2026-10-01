@@ -3,6 +3,7 @@ import type {
   AppointmentInterval,
   Schedule,
   Service,
+  SlotInterval,
   TimeInterval,
 } from "../types/types";
 import { getHoursAndMinutes, timeInMinutes } from "./time";
@@ -25,15 +26,19 @@ export const getSlots = (
   }
   return availableTimes;
 };
-export const getSlotsIntervals = (slots: string[], serviceDuration: number) => {
+export const getSlotsIntervals = (
+  slots: SlotInterval[],
+  serviceDuration: number,
+) => {
   const slotIntervals = slots.map((slot) => {
-    const [hours, minutes] = getHoursAndMinutes(slot);
+    const [hours, minutes] = getHoursAndMinutes(slot.time);
 
     const start = timeInMinutes(hours, minutes);
 
     return {
       start,
       end: start + serviceDuration,
+      masterId: slot.masterId,
     };
   });
   return slotIntervals;
@@ -42,21 +47,16 @@ export const getSlotsIntervals = (slots: string[], serviceDuration: number) => {
 export const getAvailableSlots = (
   slots: TimeInterval[],
   appointments: AppointmentInterval[],
-  availableMasterIds: string[] | undefined,
 ) => {
   return slots.filter((slot) => {
-    const hasFreeMaster = availableMasterIds?.some((masterId) => {
-      const hasConflict = appointments.some(
-        (appointment) =>
-          appointment.masterId === masterId &&
-          slot.start < appointment.end &&
-          slot.end > appointment.start,
-      );
+    const hasConflict = appointments.some(
+      (appointment) =>
+        appointment.masterId === slot.masterId &&
+        slot.start < appointment.end &&
+        slot.end > appointment.start,
+    );
 
-      return !hasConflict;
-    });
-
-    return hasFreeMaster;
+    return !hasConflict;
   });
 };
 
@@ -65,6 +65,7 @@ export const getSlotsFromSchedule = (
   serviceDuration: number,
 ) => {
   const slotsFromSchedule = workingSchedules.flatMap((schedule) => {
+    const masterId = schedule.masterId;
     const [startHours, startMinutes] = getHoursAndMinutes(schedule.startTime);
     const startTimeInMinutes = timeInMinutes(startHours, startMinutes);
     const [endHours, endMinutes] = getHoursAndMinutes(schedule.endTime);
@@ -74,7 +75,7 @@ export const getSlotsFromSchedule = (
       serviceDuration,
       endTimeInMinutes,
     );
-    return slots;
+    return slots.map((time) => ({ time, masterId }));
   });
   return slotsFromSchedule;
 };
