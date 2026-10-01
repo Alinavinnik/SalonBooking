@@ -77,24 +77,27 @@ export const useAvailableSlots = ({
 
   const serviceDuration = service?.duration;
 
-  if (!serviceDuration || !workingSchedules) {
+  if (!serviceDuration || !workingSchedules || availableMasterIds) {
     return {
       availableSlots: [],
       isPending,
     };
   }
 
-  const appointmentsForSelectedDate = appointments.filter(
-    (appointment) =>
+  const appointmentsForSelectedDate = appointments.filter((appointment) => {
+    if (selectedMasterId === "any") {
+      return appointment.date === selectedDate;
+    }
+    return (
       appointment.masterId === selectedMasterId &&
-      appointment.date === selectedDate,
-  );
+      appointment.date === selectedDate
+    );
+  });
 
   const appointmentsIntervals = getAppointmentsIntervals(
     appointmentsForSelectedDate,
     services,
   );
-
   const slots = getSlotsFromSchedule(workingSchedules, serviceDuration);
 
   const filteredSlots = [...new Set(slots)].sort();
@@ -104,8 +107,9 @@ export const useAvailableSlots = ({
   const availableSlots = getAvailableSlots(
     slotIntervals,
     appointmentsIntervals,
+    availableMasterIds,
   );
-
+  console.log(appointmentsIntervals);
   const availableSlotsTime = availableSlots.map((slot) =>
     timeInString(slot.start),
   );

@@ -42,15 +42,22 @@ export const getSlotsIntervals = (slots: string[], serviceDuration: number) => {
 export const getAvailableSlots = (
   slots: TimeInterval[],
   appointments: AppointmentInterval[],
+  availableMasterIds: string[] | undefined,
 ) => {
-  const availableSlots = slots.filter((slot) => {
-    const hasConflict = appointments.some(
-      (appointment) =>
-        slot.start < appointment.end && slot.end > appointment.start,
-    );
-    return !hasConflict;
+  return slots.filter((slot) => {
+    const hasFreeMaster = availableMasterIds?.some((masterId) => {
+      const hasConflict = appointments.some(
+        (appointment) =>
+          appointment.masterId === masterId &&
+          slot.start < appointment.end &&
+          slot.end > appointment.start,
+      );
+
+      return !hasConflict;
+    });
+
+    return hasFreeMaster;
   });
-  return availableSlots;
 };
 
 export const getSlotsFromSchedule = (
@@ -85,8 +92,9 @@ export const getAppointmentsIntervals = (
       (service) => service.id === appointment.serviceId,
     );
     const duration = service?.duration || 0;
+    const masterId = appointment.masterId;
 
-    return { start, duration, end: start + duration };
+    return { start, duration, end: start + duration, masterId };
   });
   return appointmentsIntervals;
 };

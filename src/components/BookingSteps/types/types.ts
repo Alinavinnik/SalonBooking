@@ -33,6 +33,7 @@ export interface ToggleProps {
 export interface AppointmentInterval {
   start: number;
   end: number;
+  masterId: string;
 }
 export interface TimeInterval {
   start: number;
